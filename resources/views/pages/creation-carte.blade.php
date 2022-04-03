@@ -45,7 +45,6 @@
                                     <input type="file"  name="Fichier">
                                 </div>
 
-
                                 <div class="col-span-6 sm:col-span-4">
                                     <label>
                                         Section :
@@ -62,6 +61,7 @@
                                 {{ __('Save') }}
                             </button>
                         </div>
+                    </div>
                     </div>
                 </form>
             </div>

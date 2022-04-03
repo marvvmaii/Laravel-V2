@@ -17,11 +17,12 @@
             <td class="border px-6 py-4">Fichier</td>
             <td class="border px-6 py-4">Date entrer enc</td>
             <td class="border px-6 py-4">Section</td>
+            <td class="border px-6 py-4">Action</td>
         </tr>
         </thead>
         <tbody>
 
-        @foreach($cartesEtudiant as $carteEtudiant)
+        @foreach($carteEtudiant as $carteEtudiant)
             <tr>
                 <td class="border px-6 py-4">{{$carteEtudiant['id']}}</td>
                 <td class="border px-6 py-4">{{$carteEtudiant['nomEtudiant']}}</td>
@@ -30,7 +31,10 @@
                 <td class="border px-6 py-4">{{$carteEtudiant['Téléphone']}}</td>
                 <td class="border px-6 py-4">{{$carteEtudiant['Fichier']}}</td>
                 <td class="border px-6 py-4">{{$carteEtudiant['DateEntreEnc']}}</td>
-                <td class="border px-6 py-4">{{$carteEtudiant['Section']}}</td>
+                <td class="border px-6 py-4">{{$carteEtudiant['section']}}</td>
+                <td class="border px-6 py-4">
+                    <a style="color:limegreen;" href="{{action('App\Http\Controllers\CarteEncController@edit', $carteEtudiant['id'])}}">Modifier</a>
+                </td>
             </tr>
 
         @endforeach

@@ -17,11 +17,11 @@ class CreateCarteEtudiantsTable extends Migration
             $table->id();
             $table->string('nomEtudiant');
             $table->string('prenomEtudiant');
-            $table->string('email')->unique();
+            $table->string('Email')->unique();
             $table->date('DateEntreEnc');
-            $table->String('Fichier');
+            $table->String('Fichier')();
             $table->integer('Téléphone');
-            $table->String('Section');
+            $table->String('section');
             $table->timestamps();
         });
     }

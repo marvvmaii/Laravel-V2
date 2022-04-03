@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CarteEtudiant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CarteEncController extends Controller
 {
@@ -14,6 +15,7 @@ class CarteEncController extends Controller
      */
     public function index()
     {
+        //$carteEtudiant = Auth::user()->carte;
         //
         $carteEtudiant = CarteEtudiant::all();
         return  view('pages.index',compact('carteEtudiant')) ;
@@ -45,21 +47,28 @@ class CarteEncController extends Controller
         /***
          * A COMPLETER POUR LE PRENOM ET L'EMAIL
          */
+        $nomFichierAttache = time().request()->Fichier->getClientOriginalName();
+        $request->Fichier->storeAs('public', $nomFichierAttache);
 
         $carteEtudiant->prenomEtudiant = $request->get('prenomEtudiantFormulaire');
         $carteEtudiant->Email = $request->get('Email');
         $carteEtudiant->Téléphone = $request->get('Téléphone');
-        $carteEtudiant->Fichier = $request->get('Fichier');
+        $carteEtudiant->Fichier = $nomFichierAttache;
         $carteEtudiant->DateEntreEnc = $request->get('DateEntreEnc');
         $carteEtudiant->section = $request->get('section');
+
+
 
 
         //ENREGISTREMENT DANS LA BASE DE DONNEES
         $carteEtudiant ->save();
 
+        //Auth::user()->carte()->save($carteEtudiant); //enregistre dans la base de donnée
+
         //redirection vers le dashboard
 
         return redirect('dashboard');
+        //return redirect('demandeCarte')->with('success', 'Une nouvelle demande a été enregistrée');
     }
 
 
@@ -83,6 +92,8 @@ class CarteEncController extends Controller
     public function edit($id)
     {
         //
+        $carteEtudiant = \App\Models\CarteEtudiant::find($id);
+        return view('pages.edit', compact('carteEtudiant', 'id'));
     }
 
     /**
@@ -95,6 +106,22 @@ class CarteEncController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+
+
+
+        $carteEtudiant = \App\Models\CarteEtudiant::find($id);
+        $carteEtudiant->nomEtudiant = $request->get('nomEtudiant');
+        $carteEtudiant->prenomEtudiant = $request->get('prenomEtudiant');
+        $carteEtudiant->Email = $request->get('Email');
+        $carteEtudiant->DateEntreEnc = $request->get('DateEntreEnc');
+        $carteEtudiant->Téléphone = $request->get('Téléphone');
+        $carteEtudiant->section = $request->get('section');
+        $carteEtudiant->Fichier = $request->get('Fichier');
+
+        $carteEtudiant->save();
+
+        return redirect('demandeCarte');
     }
 
     /**
